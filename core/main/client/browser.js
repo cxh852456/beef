@@ -430,11 +430,27 @@ beef.browser = {
     },
 
     /**
+     * Returns true if FF42
+     * @example: beef.browser.isFF42()
+     */
+    isFF42: function () {
+        return !!window.devicePixelRatio && !!window.history.replaceState && typeof navigator.mozGetUserMedia != "undefined" && (typeof window.crypto != "undefined" && typeof window.crypto.getRandomValues != "undefined") && typeof Math.hypot == 'function' && typeof String.prototype.codePointAt === 'function' && typeof Number.isSafeInteger === 'function' && window.navigator.userAgent.match(/Firefox\/42./) != null;
+    },
+
+    /**
+     * Returns true if FF43
+     * @example: beef.browser.isFF43()
+     */
+    isFF43: function () {
+        return !!window.devicePixelRatio && !!window.history.replaceState && typeof navigator.mozGetUserMedia != "undefined" && (typeof window.crypto != "undefined" && typeof window.crypto.getRandomValues != "undefined") && typeof Math.hypot == 'function' && typeof String.prototype.codePointAt === 'function' && typeof Number.isSafeInteger === 'function' && window.navigator.userAgent.match(/Firefox\/43./) != null;
+    },
+
+    /**
      * Returns true if FF.
      * @example: beef.browser.isFF()
      */
     isFF: function () {
-        return this.isFF2() || this.isFF3() || this.isFF3_5() || this.isFF3_6() || this.isFF4() || this.isFF5() || this.isFF6() || this.isFF7() || this.isFF8() || this.isFF9() || this.isFF10() || this.isFF11() || this.isFF12() || this.isFF13() || this.isFF14() || this.isFF15() || this.isFF16() || this.isFF17() || this.isFF18() || this.isFF19() || this.isFF20() || this.isFF21() || this.isFF22() || this.isFF23() || this.isFF24() || this.isFF25() || this.isFF26() || this.isFF27() || this.isFF28() || this.isFF29() || this.isFF30() || this.isFF31() || this.isFF32() || this.isFF33() || this.isFF34() || this.isFF35() || this.isFF36() || this.isFF37() || this.isFF38() || this.isFF39() || this.isFF40() || this.isFF41();
+        return this.isFF2() || this.isFF3() || this.isFF3_5() || this.isFF3_6() || this.isFF4() || this.isFF5() || this.isFF6() || this.isFF7() || this.isFF8() || this.isFF9() || this.isFF10() || this.isFF11() || this.isFF12() || this.isFF13() || this.isFF14() || this.isFF15() || this.isFF16() || this.isFF17() || this.isFF18() || this.isFF19() || this.isFF20() || this.isFF21() || this.isFF22() || this.isFF23() || this.isFF24() || this.isFF25() || this.isFF26() || this.isFF27() || this.isFF28() || this.isFF29() || this.isFF30() || this.isFF31() || this.isFF32() || this.isFF33() || this.isFF34() || this.isFF35() || this.isFF36() || this.isFF37() || this.isFF38() || this.isFF39() || this.isFF40() || this.isFF41() || this.isFF42() || this.isFF43();
     },
 
     /**
@@ -1029,6 +1045,10 @@ beef.browser = {
         return (!!window.chrome && !!window.fetch && !window.webkitPerformance && window.navigator.appVersion.match(/Chrome\/(\d+)\./)) && ((parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10) == 46) ? true : false);
     },
 
+    isC47: function () {
+        return (!!window.chrome && !!window.fetch && !window.webkitPerformance && window.navigator.appVersion.match(/Chrome\/(\d+)\./)) && ((parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10) == 47) ? true : false);
+    },
+
     /**
      * Returns true if Chrome for iOS 45.
      * @example: beef.browser.isC45iOS()
@@ -1042,7 +1062,7 @@ beef.browser = {
      * @example: beef.browser.isC()
      */
     isC: function () {
-        return this.isC5() || this.isC6() || this.isC7() || this.isC8() || this.isC9() || this.isC10() || this.isC11() || this.isC12() || this.isC13() || this.isC14() || this.isC15() || this.isC16() || this.isC17() || this.isC18() || this.isC19() || this.isC19iOS() || this.isC20() || this.isC20iOS() || this.isC21() || this.isC21iOS() || this.isC22() || this.isC22iOS() || this.isC23() || this.isC23iOS() || this.isC24() || this.isC24iOS() || this.isC25() || this.isC25iOS() || this.isC26() || this.isC26iOS() || this.isC27() || this.isC27iOS() || this.isC28() || this.isC28iOS() || this.isC29() || this.isC29iOS() || this.isC30() || this.isC30iOS() || this.isC31() || this.isC31iOS() || this.isC32() || this.isC32iOS() || this.isC33() || this.isC33iOS() || this.isC34() || this.isC34iOS() || this.isC35() || this.isC35iOS() || this.isC36() || this.isC36iOS() || this.isC37() || this.isC37iOS() || this.isC38() || this.isC38iOS() || this.isC39() || this.isC39iOS() || this.isC40() || this.isC40iOS() || this.isC41() || this.isC41iOS() || this.isC42() || this.isC42iOS() || this.isC43() || this.isC43iOS() || this.isC44() || this.isC44iOS() || this.isC45() || this.isC46() || this.isC45iOS();
+        return this.isC5() || this.isC6() || this.isC7() || this.isC8() || this.isC9() || this.isC10() || this.isC11() || this.isC12() || this.isC13() || this.isC14() || this.isC15() || this.isC16() || this.isC17() || this.isC18() || this.isC19() || this.isC19iOS() || this.isC20() || this.isC20iOS() || this.isC21() || this.isC21iOS() || this.isC22() || this.isC22iOS() || this.isC23() || this.isC23iOS() || this.isC24() || this.isC24iOS() || this.isC25() || this.isC25iOS() || this.isC26() || this.isC26iOS() || this.isC27() || this.isC27iOS() || this.isC28() || this.isC28iOS() || this.isC29() || this.isC29iOS() || this.isC30() || this.isC30iOS() || this.isC31() || this.isC31iOS() || this.isC32() || this.isC32iOS() || this.isC33() || this.isC33iOS() || this.isC34() || this.isC34iOS() || this.isC35() || this.isC35iOS() || this.isC36() || this.isC36iOS() || this.isC37() || this.isC37iOS() || this.isC38() || this.isC38iOS() || this.isC39() || this.isC39iOS() || this.isC40() || this.isC40iOS() || this.isC41() || this.isC41iOS() || this.isC42() || this.isC42iOS() || this.isC43() || this.isC43iOS() || this.isC44() || this.isC44iOS() || this.isC45() || this.isC46()  || this.isC47()|| this.isC45iOS();
     },
 
     /**
@@ -1183,6 +1203,7 @@ beef.browser = {
             C44iOS: this.isC44iOS(), // Chrome 44 on iOS
             C45: this.isC45(), // Chrome 45
             C46: this.isC46(), // Chrome 46
+            C47: this.isC47(), // Chrome 46
             C45iOS: this.isC45iOS(), // Chrome 45 on iOS
 
             C: this.isC(), // Chrome any version
@@ -1229,6 +1250,8 @@ beef.browser = {
             FF39: this.isFF39(), // Firefox 39
             FF40: this.isFF40(), // Firefox 40
             FF41: this.isFF41(), // Firefox 41
+            FF42: this.isFF42(), // Firefox 42
+            FF43: this.isFF43(), // Firefox 43
             FF: this.isFF(),   // Firefox any version
 
             IE6: this.isIE6(), // Internet Explorer 6
@@ -1534,7 +1557,11 @@ beef.browser = {
         if (this.isC46()) {
             return '46'
         }
-        ;   // Chrome 46
+        ;// Chrome 46
+        if (this.isC47()) {
+            return '47'
+        }
+        ;// Chrome 47
         if (this.isC45iOS()) {
             return '45'
         }
@@ -1708,6 +1735,14 @@ beef.browser = {
             return '41'
         }
         ;   // Firefox 41
+        if (this.isFF42()) {
+            return '42'
+        }
+        ;   // Firefox 42
+        if (this.isFF43()) {
+            return '43'
+        }
+        ;   // Firefox 43
 
         if (this.isIE6()) {
             return '6'
@@ -1848,16 +1883,20 @@ beef.browser = {
             flash_versions = 12;
             flash_installed = false;
 
-            if (window.ActiveXObject) {
-                for (x = 2; x <= flash_versions; x++) {
-                    try {
-                        Flash = eval("new ActiveXObject('ShockwaveFlash.ShockwaveFlash." + x + "');");
-                        if (Flash) {
-                            flash_installed = true;
+
+            if (this.type().IE11) {
+                flash_installed = (navigator.plugins["Shockwave Flash"] != undefined);
+            } else {
+                if (window.ActiveXObject != null) {
+                    for (x = 2; x <= flash_versions; x++) {
+                        try {
+                            Flash = eval("new ActiveXObject('ShockwaveFlash.ShockwaveFlash." + x + "');");
+                            if (Flash) {
+                                flash_installed = true;
+                            }
+                        } catch (e) {
+                            beef.debug("Creating Flash ActiveX object failed: " + e.message);
                         }
-                    }
-                    catch (e) {
-                        beef.debug("Creating Flash ActiveX object failed: " + e.message);
                     }
                 }
             }
