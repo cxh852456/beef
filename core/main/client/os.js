@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2006-2015 Wade Alcorn - wade@bindshell.net
+// Copyright (c) 2006-2016 Wade Alcorn - wade@bindshell.net
 // Browser Exploitation Framework (BeEF) - http://beefproject.com
 // See the file 'doc/COPYING' for copying permission
 //
@@ -182,9 +182,11 @@ beef.os = {
 		// Android
 		if(this.isAndroid()) return 'Android';
 
+		// SunOS
+		if(this.isSunOS()) return 'SunOS';
+
 		//Linux
 		if(this.isLinux()) return 'Linux';
-		if(this.isSunOS()) return 'Sun OS';
 
 		//iPhone
 		if (this.isIphone()) return 'iOS';

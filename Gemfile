@@ -1,7 +1,7 @@
 # BeEF's Gemfile
 
 #
-# Copyright (c) 2006-2015 Wade Alcorn - wade@bindshell.net
+# Copyright (c) 2006-2016 Wade Alcorn - wade@bindshell.net
 # Browser Exploitation Framework (BeEF) - http://beefproject.com
 # See the file 'doc/COPYING' for copying permission
 #
@@ -11,7 +11,7 @@ gem 'thin'
 gem 'sinatra'
 gem 'rack'
 gem 'em-websocket', '~> 0.3.6' # WebSocket support
-gem 'uglifier', '~> 2.2.1'
+gem 'uglifier'
 gem 'mime-types'
 
 
