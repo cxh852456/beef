@@ -307,11 +307,15 @@ module BeEF
           begin
             cmd_body = command_body.lines.map(&:chomp)
             wrapper_start_index,wrapper_end_index = nil
+
             cmd_body.each_with_index do |line, index|
-              if line.include?('beef.execute(function()')
+              if line.to_s =~ /^(beef|[a-zA-Z]+)\.execute\(function\(\)/
                 wrapper_start_index = index
                 break
               end
+            end
+            if wrapper_start_index.nil?
+              print_error "[ARE] Could not find module start index"
             end
 
             cmd_body.reverse.each_with_index do |line, index|
@@ -320,8 +324,14 @@ module BeEF
                 break
               end
             end
+            if wrapper_end_index.nil?
+              print_error "[ARE] Could not find module end index"
+            end
 
-            cleaned_cmd_body = cmd_body.slice(wrapper_start_index+1..-(wrapper_end_index+2)).join("\n")
+            cleaned_cmd_body = cmd_body.slice(wrapper_start_index..-(wrapper_end_index+1)).join("\n")
+            if cleaned_cmd_body.eql?('')
+              print_error "[ARE] No command to send"
+            end
 
             # check if <<mod_input>> should be replaced with a variable name (depending if the variable is a string or number)
             if replace_input
@@ -360,6 +370,7 @@ module BeEF
             rules = BeEF::Core::AutorunEngine::Models::Rule.all()
           end
           return nil if rules == nil
+          return nil unless rules.length > 0
 
           print_info "[ARE] Checking if any defined rules should be triggered on target."
           # TODO handle cases where there are multiple ARE rules for the same hooked browser.
@@ -402,19 +413,29 @@ module BeEF
               next unless @VERSION.include?(os_ver_rule_cond) || @VERSION_STR.include?(os_ver_rule_cond)
               # os_ver without checks as it can be very different or even empty, for instance on linux/bsd)
 
-              # check if the browser and OS types do match
-              next unless rule.browser == 'ALL'  || browser == rule.browser
-              next unless rule.os == 'ALL'       || os == rule.os
-
-              # check if the browser version match
-              browser_version_match = compare_versions(browser_version.to_s, b_ver_cond, b_ver.to_s)
-              if browser_version_match
-                browser_match = true
+              # skip rule unless the browser matches
+              browser_match = false
+              # check if rule specifies multiple browsers
+              if rule.browser !~ /\A[A-Z]+\Z/
+                rule.browser.gsub(/[^A-Z,]/i, '').split(',').each do |b|
+                  browser_match = true if b == browser || b == 'ALL'
+                end
+              # else, only one browser
               else
-                browser_match = false
+                next unless rule.browser == 'ALL' || browser == rule.browser
+                # check if the browser version matches
+                browser_version_match = compare_versions(browser_version.to_s, b_ver_cond, b_ver.to_s)
+                if browser_version_match
+                  browser_match = true
+                else
+                  browser_match = false
+                end
+                print_more "Browser version check -> (hook) #{browser_version} #{rule.browser_version} (rule) : #{browser_version_match}"
               end
+              next unless browser_match
 
-              print_more "Browser version check -> (hook) #{browser_version} #{rule.browser_version} (rule) : #{browser_version_match}"
+              # skip rule unless the OS matches
+              next unless rule.os == 'ALL' || os == rule.os
 
               # check if the OS versions match
               if os_version != nil || rule.os_version != 'ALL'
