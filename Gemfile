@@ -1,7 +1,7 @@
 # BeEF's Gemfile
 
 #
-# Copyright (c) 2006-2016 Wade Alcorn - wade@bindshell.net
+# Copyright (c) 2006-2017 Wade Alcorn - wade@bindshell.net
 # Browser Exploitation Framework (BeEF) - http://beefproject.com
 # See the file 'doc/COPYING' for copying permission
 #
@@ -9,29 +9,23 @@
 gem 'eventmachine'
 gem 'thin'
 gem 'sinatra'
-gem 'rack'
+gem 'rack', '~> 1.6.5'
 gem 'em-websocket' # WebSocket support
 gem 'uglifier'
 gem 'mime-types'
-
-
-# Windows support
-if RUBY_PLATFORM.downcase.include?('mswin') || RUBY_PLATFORM.downcase.include?('mingw')
-  # make sure you install this gem following https://github.com/eakmotion/therubyracer_for_windows
-  gem 'therubyracer', '~> 0.11.0beta1'
-elsif !RUBY_PLATFORM.downcase.include?('darwin')
-  gem 'therubyracer', '0.11.3'
-end
- 
 gem 'execjs'
 gem 'ansi'
 gem 'term-ansicolor', :require => 'term/ansicolor'
 gem 'dm-core'
 gem 'json'
 gem 'data_objects'
-gem 'rubyzip', '>= 1.0.0'
-gem 'espeak-ruby', '>= 1.0.3' # Text-to-Voice
+gem 'rubyzip', '~> 1.2.1'
+gem 'espeak-ruby', '~> 1.0.4' # Text-to-Voice
+gem 'nokogiri', '~> 1.7.1'
 
+if RUBY_PLATFORM.downcase.include?('linux')
+  gem 'therubyracer', '~> 0.12.2', '<= 0.12.2'
+end
 
 # SQLite support
 group :sqlite do
@@ -85,6 +79,7 @@ end
 # For running unit tests
 group :test do
 if ENV['BEEF_TEST']
+  gem 'rake'
   gem 'test-unit'
   gem 'test-unit-full'
   gem 'curb'
@@ -97,7 +92,7 @@ if ENV['BEEF_TEST']
   # sudo port install libxml2 libxslt
   gem 'capybara'
   # RESTful API tests/generic command module tests
-  gem 'rest-client', '>= 1.8.0'
+  gem 'rest-client', '~> 2.0.1'
 end
 end
 

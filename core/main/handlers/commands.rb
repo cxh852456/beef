@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2006-2016 Wade Alcorn - wade@bindshell.net
+# Copyright (c) 2006-2017 Wade Alcorn - wade@bindshell.net
 # Browser Exploitation Framework (BeEF) - http://beefproject.com
 # See the file 'doc/COPYING' for copying permission
 #
@@ -31,7 +31,7 @@ module BeEF
           @http_params = @data['request'].params
           @http_header = Hash.new
           http_header = @data['request'].env.select { |k, v| k.to_s.start_with? 'HTTP_' }.each { |key, value|
-            @http_header[key.sub(/^HTTP_/, '')] = value
+            @http_header[key.sub(/^HTTP_/, '')] = value.force_encoding('UTF-8')
           }
 
           # @note get and check command id from the request

@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2006-2016 Wade Alcorn - wade@bindshell.net
+# Copyright (c) 2006-2017 Wade Alcorn - wade@bindshell.net
 # Browser Exploitation Framework (BeEF) - http://beefproject.com
 # See the file 'doc/COPYING' for copying permission
 #
@@ -84,6 +84,8 @@ class Modules < BeEF::Extension::AdminUI::HttpController
         ['Browser Components', 'PhoneGap',           'HasPhonegap'],
         ['Browser Components', 'Google Gears',       'HasGoogleGears'],
         ['Browser Components', 'Web Sockets',        'HasWebSocket'],
+        ['Browser Components', 'Web Workers',        'HasWebWorker'],
+        ['Browser Components', 'WebGL',              'HasWebGL'],
         ['Browser Components', 'QuickTime',          'HasQuickTime'],
         ['Browser Components', 'RealPlayer',         'HasRealPlayer'],
         ['Browser Components', 'Windows Media Player','HasWMP'],
@@ -92,6 +94,8 @@ class Modules < BeEF::Extension::AdminUI::HttpController
         ['Browser Components', 'ActiveX',            'HasActiveX'],
         ['Browser Components', 'Session Cookies',    'hasSessionCookies'],
         ['Browser Components', 'Persistent Cookies', 'hasPersistentCookies'],
+        ['Browser Components', 'Unity',              'HasUnity'],
+        ['Browser Components', 'Foxit',              'HasFoxit'],
 
         # Geolocation
         ['Location', 'City',          'LocationCity'],

@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2006-2016 Wade Alcorn - wade@bindshell.net
+# Copyright (c) 2006-2017 Wade Alcorn - wade@bindshell.net
 # Browser Exploitation Framework (BeEF) - http://beefproject.com
 # See the file 'doc/COPYING' for copying permission
 #
@@ -25,7 +25,7 @@ class Spyder_eye < BeEF::Core::Command
     begin
       timestamp = Time.now.localtime.strftime("%Y-%m-%d_%H-%M-%S")
       ip = BeEF::Core::Models::BrowserDetails.get(session_id, 'IP')
-      filename = "screenshot_#{ip}_-_#{timestamp}_#{@datastore['cid']}.png"
+      filename = "#{$home_dir}/screenshot_#{ip}_-_#{timestamp}_#{@datastore['cid']}.png"
       File.open(filename, 'wb') do |file|
         data = @datastore['results'].gsub(/^image=data:image\/(png|jpg);base64,/, "")
         file.write(Base64.decode64(data))

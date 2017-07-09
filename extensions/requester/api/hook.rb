@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2006-2016 Wade Alcorn - wade@bindshell.net
+# Copyright (c) 2006-2017 Wade Alcorn - wade@bindshell.net
 # Browser Exploitation Framework (BeEF) - http://beefproject.com
 # See the file 'doc/COPYING' for copying permission
 #
@@ -32,7 +32,7 @@ module BeEF
             #todo antisnatchor: remove this gsub crap adding some hook packing.
             if config.get("beef.http.websocket.enable") && ws.getsocket(hb.session)
               content = File.read(find_beefjs_component_path 'beef.net.requester').gsub('//
-              //   Copyright (c) 2006-2016 Wade Alcorn - wade@bindshell.net
+              //   Copyright (c) 2006-2017 Wade Alcorn - wade@bindshell.net
               //   Browser Exploitation Framework (BeEF) - http://beefproject.com
               //   See the file \'doc/COPYING\' for copying permission
               //', "")
@@ -64,13 +64,12 @@ module BeEF
           def requester_parse_db_request(http_db_object)
 
             allow_cross_domain = http_db_object.allow_cross_domain.to_s
-            req_parts = http_db_object.request.split(/ |\n/)
-            verb = req_parts[0]
-            proto = http_db_object.proto
-            uri = req_parts[1]
+            verb = http_db_object.method.upcase
+            proto = http_db_object.proto.downcase
+            uri = http_db_object.request.split(/\s+/)[1]
             headers = {}
 
-            req_parts = http_db_object.request.split(/  |\n/)
+            req_parts = http_db_object.request.split(/\r?\n/)
 
             @host = http_db_object.domain
             @port = http_db_object.port
@@ -88,16 +87,16 @@ module BeEF
 
             #@note: add HTTP request headers to an Hash
             req_parts.each_with_index do |value, index|
-              if verb.eql?("POST")
+              if verb.eql?('POST')
                 if index > 0 and index < @post_data_index #only add HTTP headers, not the verb/uri/version or post-data
-                   header_key = req_parts[index].split(/: /)[0]
-                   header_value = req_parts[index].split(/: /)[1]
+                   header_key = value.split(/: /)[0]
+                   header_value = value.split(/: /)[1]
                    headers[header_key] = header_value
                 end
               else
                 if index > 0  #only add HTTP headers, not the verb/uri/version
-                   header_key = req_parts[index].split(/: /)[0]
-                   header_value = req_parts[index].split(/: /)[1]
+                   header_key = value.split(/: /)[0]
+                   header_value = value.split(/: /)[1]
                    headers[header_key] = header_value
                 end
               end
@@ -110,37 +109,27 @@ module BeEF
                 (uri.match(/^https:/)) ? @port = 443 : @port = 80
               else
                 # relative
-                (proto == 'https') ? @port = 443 : @port = 80
+                (proto.eql?('https')) ? @port = 443 : @port = 80
               end
             end
 
-            #POST request
+            # Build request
+            http_request_object = {
+              'id'               => http_db_object.id,
+              'method'           => verb,
+              'proto'            => proto,
+              'host'             => @host,
+              'port'             => @port,
+              'uri'              => uri,
+              'headers'          => headers,
+              'allowCrossDomain' => allow_cross_domain
+            }
+
+            # Add POST request data
             if not @content_length.nil? and @content_length > 0
-              post_data_scliced = req_parts.slice(@post_data_index + 1, req_parts.length)
-              @post_data = post_data_scliced.join
-              http_request_object = {
-                  'id' => http_db_object.id,
-                  'method' => verb,
-                  'proto' => proto,
-                  'host' => @host,
-                  'port' => @port,
-                  'data' => @post_data,
-                  'uri' => uri,
-                  'headers' => headers,
-                  'allowCrossDomain' => allow_cross_domain
-              }
-            else
-              #non-POST request (ex. GET)
-              http_request_object = {
-                  'id' => http_db_object.id,
-                  'method' => verb,
-                  'proto' => proto,
-                  'host' => @host,
-                  'port' => @port,
-                  'uri' => uri,
-                  'headers' => headers,
-                  'allowCrossDomain' => allow_cross_domain
-              }
+              post_data_sliced = req_parts.slice(@post_data_index + 1, req_parts.length)
+              @post_data = post_data_sliced.join
+              http_request_object['data'] = @post_data
             end
 
             #@note: parse HTTP headers Hash, adding them to the object that will be used by beef.net.requester.send

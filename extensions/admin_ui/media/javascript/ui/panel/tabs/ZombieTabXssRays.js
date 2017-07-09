@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2006-2016 Wade Alcorn - wade@bindshell.net
+// Copyright (c) 2006-2017 Wade Alcorn - wade@bindshell.net
 // Browser Exploitation Framework (BeEF) - http://beefproject.com
 // See the file 'doc/COPYING' for copying permission
 //
@@ -23,7 +23,7 @@ ZombieTab_XssRaysTab = function(zombie) {
 
      var xssrays_logs_store = new Ext.ux.data.PagingJsonStore({
         storeId: 'xssrays-logs-store-zombie-' + zombie.session,
-        url: '/<%= @base_path %>/xssrays/zombie.json',
+        url: '<%= @base_path %>/xssrays/zombie.json',
         remoteSort: false,
         autoDestroy: true,
         autoLoad: false,

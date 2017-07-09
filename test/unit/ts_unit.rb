@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2006-2016 Wade Alcorn - wade@bindshell.net
+# Copyright (c) 2006-2017 Wade Alcorn - wade@bindshell.net
 # Browser Exploitation Framework (BeEF) - http://beefproject.com
 # See the file 'doc/COPYING' for copying permission
 #
@@ -21,6 +21,7 @@ require './core/tc_social_engineering'
 require './core/tc_autorun'
 require './core/tc_obfuscation'
 require './core/tc_logger'
+require './core/main/models/tc_browserdetails'
 require './extensions/tc_xssrays'
 require './extensions/tc_ipec_tunnel'
 require './extensions/tc_hooks'
@@ -60,6 +61,7 @@ class TS_BeefTests
     suite << TC_Network.suite
     suite << TC_Qrcode.suite
     suite << TC_Hooks.suite
+    suite << TC_BrowserDetails.suite
     suite << TC_Redirector.suite
     suite << TC_DynamicReconstruction.suite
     suite << TC_Console.suite

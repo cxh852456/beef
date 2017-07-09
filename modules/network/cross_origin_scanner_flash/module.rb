@@ -1,13 +1,13 @@
 #
-# Copyright (c) 2006-2015 Wade Alcorn - wade@bindshell.net
+# Copyright (c) 2006-2017 Wade Alcorn - wade@bindshell.net
 # Browser Exploitation Framework (BeEF) - http://beefproject.com
 # See the file 'doc/COPYING' for copying permission
 #
 class Cross_origin_scanner_flash < BeEF::Core::Command
 
   def pre_send
-    BeEF::Core::NetworkStack::Handlers::AssetHandler.instance.bind('/modules/network/cross_origin_scanner_flash/ContentHijacking.swf','/objects/ContentHijacking','swf')
-    BeEF::Core::NetworkStack::Handlers::AssetHandler.instance.bind('/modules/network/cross_origin_scanner_flash/swfobject.js', '/swfobject', 'js')
+    BeEF::Core::NetworkStack::Handlers::AssetHandler.instance.bind_cached('/modules/network/cross_origin_scanner_flash/ContentHijacking.swf','/objects/ContentHijacking','swf')
+    BeEF::Core::NetworkStack::Handlers::AssetHandler.instance.bind_cached('/modules/network/cross_origin_scanner_flash/swfobject.js', '/swfobject', 'js')
   end
 
   def post_execute
